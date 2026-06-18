@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Sayanta Seth | NextG Wireless Systems & Digital Twins</title>
+    <style>
+        :root {
+            --vt-maroon: #ff2a7f; /* Hyper-vibrant maroon optimized for dark emission */
+            --vt-orange: #ff7a28; /* Liquid neon orange contrast */
+            --glass-bg: rgba(15, 23, 42, 0.65); /* Fluid translucent base */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-dark: #f8fafc;
+            --text-light: #94a3b8;
+            --bg-body: #020617; /* Absolute space-black abyss */
+            --border-radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(255, 42, 127, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(255, 122, 40, 0.12) 0%, transparent 45%);
+            background-attachment: fixed;
+            line-height: 1.6;
+            display: flex;
+            opacity: 0;
+            animation: pageReveal 1s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes pageReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LIQUID GLASS SIDEBAR - COMPLETELY LOCKED AND RIGID */
+        .sidebar {
+            width: 360px;
+            position: fixed;
+            top: 20px;
+            bottom: 20px;
+            left: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(210%);
+            -webkit-backdrop-filter: blur(30px) saturate(210%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden; /* Strips out scrollbars completely */
+            height: calc(100vh - 40px);
+            z-index: 1000;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-container {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--vt-maroon), var(--vt-orange));
+            opacity: 0.6;
+            filter: blur(8px);
+            transition: var(--transition);
+        }
+
+        .profile-container:hover::before {
+            opacity: 0.9;
+            filter: blur(12px);
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+            display: block;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .profile-info h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-info .title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--vt-orange);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .profile-info .inst {
+            font-size: 13.5px;
+            color: var(--text-light);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* BRAND LOGOS GRID */
+        .sidebar-brand-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-brand-logos img {
+            height: 28px;
+            max-width: 52px;
+            object-fit: contain;
+            filter: brightness(0.9) grayscale(15%);
+            transition: var(--transition);
+        }
+
+        .sidebar-brand-logos img:hover {
+            filter: brightness(1.1) grayscale(0%);
+            transform: scale(1.18);
+        }
+
+        .nav-links {
+            width: 100%;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14.5px;
+            border-radius: 12px;
+            transition: var(--transition);
+            margin-bottom: 6px;
+        }
+
+        .nav-links li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            transform: translateX(4px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-info {
+            font-size: 13px;
+            color: var(--text-light);
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            margin-top: auto;
+        }
+
+        .contact-info p { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .contact-info a { color: var(--vt-orange); text-decoration: none; font-weight: 600; transition: var(--transition); }
+        .contact-info a:hover { color: #ffffff; text-decoration: underline; }
+
+        /* RIGHT GLASS SCROLL CONTAINER */
+        .main-content {
+            margin-left: 400px;
+            padding: 40px 60px 40px 40px;
+            max-width: 1200px;
+            width: calc(100% - 380px);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(74, 0, 30, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 42, 127, 0.2);
+            padding: 50px;
+            border-radius: var(--border-radius);
+            margin-bottom: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h2 { color: #ffffff; font-size: 30px; font-weight: 800; margin-bottom: 15px; border: none; letter-spacing: -0.5px; }
+        .hero h2 span { background: linear-gradient(135deg, var(--vt-orange), #ffcd38); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 16px; color: #e2e8f0; opacity: 0.9; line-height: 1.7; }
+
+        section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 45px;
+            border-radius: var(--border-radius);
+            margin-bottom: 35px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            scroll-margin-top: 40px;
+        }
+
+        h2.section-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 700;
+            padding-bottom: 14px;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2.section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: linear-gradient(to bottom, var(--vt-maroon), var(--vt-orange));
+            border-radius: 4px;
+        }
+
+        h3.pub-heading {
+            font-size: 14px;
+            color: var(--vt-orange);
+            margin: 40px 0 20px 0;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3.pub-heading::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* GRID STRUCTURES */
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 30px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 122, 40, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .card-tag {
+            background: rgba(255, 42, 127, 0.1);
+            color: var(--vt-maroon);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 42, 127, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .glass-card h3 { font-size: 17px; margin-bottom: 12px; color: #ffffff; font-weight: 700; line-height: 1.4; }
+        .glass-card p { font-size: 14px; color: var(--text-light); flex-grow: 1; margin-bottom: 20px; text-align: justify; line-height: 1.6; }
+
+        .card-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .card-footer code {
+            font-family: monospace;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #e2e8f0;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* LIQUID TIMELINE & LIST PATTERNS */
+        .timeline-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .logo-frame {
+            width: 70px;
+            height: 70px;
+            background: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo-frame img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .timeline-content { flex-grow: 1; }
+        .timeline-content h3 { font-size: 17px; color: #ffffff; display: flex; justify-content: space-between; align-items: baseline; font-weight: 700; }
+        .timeline-content .role { font-size: 14.5px; font-weight: 600; color: var(--vt-orange); margin-bottom: 6px; }
+        .timeline-content p { font-size: 14px; color: var(--text-light); }
+
+        .date-badge {
+            font-size: 11px; font-weight: 700; background: rgba(255, 255, 255, 0.05); padding: 4px 14px; border-radius: 30px; color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* AWARD DESIGN LAYOUT */
+        .award-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .award-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 42, 127, 0.2);
+            transform: translateX(4px);
+        }
+
+        .award-icon {
+            font-size: 22px;
+            background: linear-gradient(135deg, rgba(255, 122, 40, 0.2), rgba(255, 42, 127, 0.2));
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .award-details { flex-grow: 1; }
+        .award-title { font-size: 15px; font-weight: 600; color: #ffffff; }
+        .award-source { font-size: 13px; color: var(--text-light); }
+
+        /* SCHOLARLY PUBLICATIONS LISTING */
+        .pub-row {
+            padding: 20px;
+            border-left: 3px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 14px;
+            background: rgba(255, 255, 255, 0.005);
+            transition: var(--transition);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .pub-row:hover {
+            border-left-color: var(--vt-maroon);
+            background: rgba(255, 42, 127, 0.03);
+            transform: translateX(5px);
+        }
+
+        .pub-meta-tag {
+            font-size: 9.5px; font-weight: 800; text-transform: uppercase; color: var(--vt-orange); letter-spacing: 0.8px; display: block; margin-bottom: 6px;
+        }
+
+        .pub-title { font-size: 15.5px; font-weight: 600; color: #ffffff; margin-bottom: 6px; line-height: 1.4; }
+        .pub-authors { font-size: 13.5px; color: #cbd5e1; }
+        .pub-authors strong { color: var(--vt-maroon); font-weight: 600; }
+        .pub-venue { font-style: italic; color: var(--text-light); font-size: 13.5px; margin-top: 2px; }
+        .pub-link { font-size: 12px; color: var(--vt-orange); text-decoration: none; display: inline-block; margin-top: 8px; font-weight: 600; }
+        .pub-link:hover { text-decoration: underline; color: #ffffff; }
+
+        @media (max-width: 1024px) {
+            body { flex-direction: column; background-attachment: scroll; }
+            .sidebar { width: calc(100% - 40px); position: relative; height: auto; top: 20px; left: 20px; margin-bottom: 20px; padding: 40px 20px; }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .grid-two { grid-template-columns: 1fr; }
+            .timeline-item { flex-direction: column; gap: 15px; }
+            .timeline-content h3 { flex-direction: column; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="profile-container">
+            <img src="sayanta Large.png" alt="Dr. Sayanta Seth" class="profile-img">
+        </div>
+        
+        <div class="profile-info">
+            <h1>Sayanta Seth, Ph.D.</h1>
+            <div class="title">Postdoctoral Associate</div>
+            <div class="inst">CCI xG Testbed<br>Virginia Tech</div>
+        </div>
+
+        <div class="sidebar-brand-logos">
+            <img src="vt.webp" alt="VT Logo">
+            <img src="cci.jpg" alt="CCI Logo">
+            <img src="ncstate.png" alt="NCSU Logo">
+            <img src="ucf.png" alt="UCF Logo">
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#about">Overview</a></li>
+            <li><a href="#grants">Grants & Funding</a></li>
+            <li><a href="#research">Research Projects</a></li>
+            <li><a href="#experience">Track Record</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#publications">Publications</a></li>
+        </ul>
+
+        <div class="contact-info">
+            <p>✉️ <a href="mailto:sayanta@vt.edu">sayanta@vt.edu</a></p>
+            <p>🔗 <a href="https://linkedin.com/in/sayantaseth" target="_blank">linkedin.com/in/sayantaseth</a></p>
+            <p>🌐 <a href="https://engr.ncsu.edu/people/sseth2" target="_blank">engr.ncsu.edu/people/sseth2</a></p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="hero">
+            <h2>Advancing the Frontiers of <span>NextG Environments</span></h2>
+            <p>
+                I design the analytical paradigms, secure O-RAN control loops, and contextual digital twins required to operate scalable, ultra-reliable wireless infrastructure. My current investigations explore high-fidelity emulation frameworks, dynamic satellite coexistence interfaces, and deep space surface communications.
+            </p>
+        </div>
+        
+        <section id="about">
+            <h2 class="section-title">Research Vision</h2>
+            <p style="font-size: 15.5px; color: #cbd5e1; margin-bottom: 15px; text-align: justify;">
+                Modern software-defined radio networks demand deployment architectures that transition beyond passive rule sets toward real-time structural intelligence. At Virginia Tech’s Commonwealth Cyber Initiative (CCI) xG Testbed, my active portfolio balances physical zero-trust constraints with open standards implementation.
+            </p>
+            <p style="font-size: 15.5px; color: #cbd5e1; text-align: justify;">
+                By optimizing deep cross-layer interactions within the O-RAN stack, my systems research aims to deliver actionable solutions for dynamic multi-tier spectrum access, zero-feedback interference isolation, and adaptive defensive posture against tactical intelligent jamming.
+            </p>
+        </section>
+
+        <section id="grants">
+            <h2 class="section-title">Grants & Awarded Funding</h2>
+            <div class="timeline-item" style="background: rgba(255, 122, 40, 0.03); border-color: rgba(255, 122, 40, 0.15);">
+                <div class="logo-frame" style="background: #ffffff;">
+                    <img src="nasa.webp" alt="NASA Logo">
+                </div>
+                <div class="timeline-content">
+                    <h3>NASA SCAN SBIR Phase I Portfolio <span class="date-badge" style="background: rgba(255, 122, 40, 0.1); color: var(--vt-orange);">Active</span></h3>
+                    <div class="role" style="color: #ffffff; font-size: 15px; margin-top: 4px;">LUNAR-DT: Digital Twin Modeling and System-Level Evaluation of Lunar Networks</div>
+                    <p style="margin-top: 8px; font-size: 13.5px; color: #cbd5e1;">
+                        Co-engineered a comprehensive geometry-aware lunar digital twin ecosystem using ns-3 network engines integrated with NASA LOLA terrain databases. Formulated multi-tier lunar link assessments presented directly to NASA Glenn Research Center executive leadership.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2 class="section-title">Research Projects Spotlight</h2>
+            <div class="grid-two">
+                
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-tag">6G Coexistence</span>
+                    </div>
+                    <h3>DigiCaM: Feedback-Free Spectrum Sharing</h3>
+                    <p>Activating commercial terrestrial 6G deployments in the lower 12 GHz band is heavily constrained by the strict mandate to protect passive Fixed Satellite Service receive-only Earth Stations (FSS-ES) which neither transmit nor provide interference feedback. To circumvent this sensing bottleneck, we developed DigiCaM, a Context-Aware Digital Twin (CDT) framework that leverages site-specific 3D building geometry, 3GPP channel models, and real-time weather dynamics to infer interference without passive incumbent involvement. Utilizing a Recurrent Deep Reinforcement Learning (R-DRL) model structured with Lagrangian duality, extensive evaluation across a 33-MBS layout in Blacksburg, VA demonstrated up to an 84% spectral efficiency enhancement while maintaining strict compliance boundaries.</p>
+                    <div class="card-footer">
+                        <code>Lagrangian Duality</code> <code>R-DRL</code> <code>3D Ray-Tracing</code> <code>FR3 Band</code>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-tag">Spectrum Twin Architecture</span>
+                    </div>
+                    <h3>POST: Programmable Open Spectrum Twin</h3>
+                    <p>Legacy spectrum-sharing architectures like SAS and TVWS suffer from high operational latencies, steep infrastructure sensing costs, and rigid worst-case interference assumptions that scale poorly in dynamic mid-band environments. This work introduces POST (Programmable Open Spectrum Twin), an advanced spectrum management framework that deeply integrates Open RAN (O-RAN) architectures with a proactive digital twin perception layer. By leveraging custom xApps and rApps within an Intelligent Spectrum Sensing Unit (ISSU), POST introduces real-time "what-if" policy testing simulations and predictive interference mitigation algorithms across complex multi-tier cellular infrastructures.</p>
+                    <div class="card-footer">
+                        <code>O-RAN Architecture</code> <code>xApps / rApps</code> <code>Dynamic Spectrum Access</code>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-tag">Network Security Emulation</span>
+                    </div>
+                    <h3>Cognisseum: Cognitive Radios Facing Adversaries</h3>
+                    <p>While dynamic spectrum access and software-based controls bring flexible agility to modern radios, they also open new vulnerabilities to strategic, highly coordinated adversarial jamming and evasion attacks. We formulated algorithmic defense mechanisms utilizing cooperative game-theoretic optimization models that enable secondary user pairs to adaptively form secure, payload-maximizing coalitions against smart and naive adversaries. This security framework was fully implemented and benchmarked on the Colosseum wireless channel emulator—the world's largest wireless testbed—demonstrating optimal channel stabilization and robust defensive agility under real-time tactical jamming scenarios.</p>
+                    <div class="card-footer">
+                        <code>Colosseum Testbed</code> <code>Game Theory</code> <code>SDR Jamming Defense</code>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-tag">mmWave Optimization</span>
+                    </div>
+                    <h3>Directional Radio Allocation & Beamsteering Optimization</h3>
+                    <p>Harnessing directional mmWave frequencies requires continuous line-of-sight path alignment, introducing severe blockage issues and complex multi-user interference when forced to operate without continuous base station coordination. We proposed a role-based architectural classification framework that partitions directional radio nodes into Primary Antennas (PAs) and Secondary Antennas (SAs) running across a multi-phase Uplink/Downlink/PA-PA time-sharing layout. To avoid intractable computational complexity, we designed evolutionary algorithms and polynomial-time Recursive Random Search (RRS) heuristics to maximize sum-rate capacity, proving near-optimal performance across scalable networks of hundreds of nodes.</p>
+                    <div class="card-footer">
+                        <code>mmWave Phased Arrays</code> <code>Recursive Random Search</code> <code>Sum-Rate Optimization</code>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title">Professional Track Record</h2>
+
+            <div class="timeline-item">
+                <div class="logo-frame">
+                    <img src="vt.webp" alt="Virginia Tech Logo">
+                </div>
+                <div class="timeline-content">
+                    <h3>Virginia Tech | Commonwealth Cyber Initiative (CCI) <span class="date-badge">June 2026 – Present</span></h3>
+                    <div class="role">Postdoctoral Associate — CCI xG Testbed</div>
+                    <p>Leading hardware-in-the-loop validation, advanced zero-trust xApp integration testing, and core research infrastructure operations. Managing end-to-end multi-user cell slices, executing O-RAN ecosystem integration using srsRAN and OpenAirInterface (OAI) stacks coupled with multi-vendor Open Radio Units.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="logo-frame">
+                    <img src="ncstate.png" alt="NC State Logo">
+                </div>
+                <div class="timeline-content">
+                    <h3>North Carolina State University <span class="date-badge">Aug 2024 – June 2026</span></h3>
+                    <div class="role">Postdoctoral Research Fellow & Instructor of Record</div>
+                    <p>Executed advanced spectrum-sharing topologies in the NextG Wireless Lab. Served as the Instructor of Record for ECE 209 (Computer Systems Programming), building structured evaluation schemes for low-level software architecture.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="logo-frame" style="font-weight: bold; color: #00285e; font-size: 14px; background: #ffffff;">
+                    GMU
+                </div>
+                <div class="timeline-content">
+                    <h3>George Mason University <span class="date-badge">Apr 2024 – Aug 2024</span></h3>
+                    <div class="role">Postdoctoral Research Fellow</div>
+                    <p>Conducted initial architectural frameworks on secure cyber-physical networking models and software-driven core infrastructure protections.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="logo-frame">
+                    <img src="ucf.png" alt="UCF Logo">
+                </div>
+                <div class="timeline-content">
+                    <h3>University of Central Florida <span class="date-badge">2018 – 2023</span></h3>
+                    <div class="role">Graduate Research Assistant & Ph.D. Fellow</div>
+                    <p>Completed doctoral dissertation detailing joint beamsteering optimization algorithms and ad-hoc coalition mechanics for directional mmWave arrays. Won multiple highly competitive graduate presentation fellowships.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="awards">
+            <h2 class="section-title">Awards & Fellowships</h2>
+            
+            <div class="award-item">
+                <div class="award-icon">🏆</div>
+                <div class="award-details">
+                    <div class="award-title">Graduate Research Support Award</div>
+                    <div class="award-source">University of Central Florida</div>
+                </div>
+            </div>
+
+            <div class="award-item">
+                <div class="award-icon">🎓</div>
+                <div class="award-details">
+                    <div class="award-title">Graduate Presentation Fellowship (Three Consecutive Awards)</div>
+                    <div class="award-source">University of Central Florida Graduate Council</div>
+                </div>
+            </div>
+
+            <div class="award-item">
+                <div class="award-icon">✈️</div>
+                <div class="award-details">
+                    <div class="award-title">IEEE MASS 2023 Student Travel Grant</div>
+                    <div class="award-source">IEEE Computer Society Technical Committee on Distributed Processing</div>
+                </div>
+            </div>
+
+            <div class="award-item">
+                <div class="award-icon">🌐</div>
+                <div class="award-details">
+                    <div class="award-title">IEEE WCNC 2022 Student Travel Grant</div>
+                    <div class="award-source">IEEE Communications Society</div>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="publications">
+            <h2>Publications</h2>
+
+            <h3 class="pub-heading">Journals & Book Chapters</h3>
+            
+            <div class="pub-row">
+                <span class="pub-meta-tag">Journal Article</span>
+                <div class="pub-title">DigiCaM: Digital Twin-assisted Context-aware MBS Control for 6G Coexistence with Passive FSS Earth Station</div>
+                <div class="pub-authors">T. R. Niloy, <strong>S. Seth</strong>, D. Ron, M. Z. Hassan, and V. K. Shah</div>
+                <div class="pub-venue">Authorea, 2026</div>
+                <a href="https://doi.org/10.22541/au.177196116.61278221/vl" class="pub-link" target="_blank">🔗 View Paper via DOI</a>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">IEEE Transactions</span>
+                <div class="pub-title">Beamsteering Optimization for Line-of-Sight Directional Radios with Random Scheduling</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, M. Yuksel, and A. Vosoughi</div>
+                <div class="pub-venue">IEEE Transactions on Communications, vol. 74, 2026</div>
+                <a href="https://doi.org/10.1109/TCOMM.2025.3644492" class="pub-link" target="_blank">🔗 View Paper via DOI</a>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Journal Article</span>
+                <div class="pub-title">POST: Programmable Open Spectrum Twin for Enhanced Spectrum Sharing in 6G Bands</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, T. R. Niloy, M. Z. Hassan, and V. K. Shah</div>
+                <div class="pub-venue">IEEE Communications Standards Magazine, 2025</div>
+                <a href="https://doi.org/10.1109/MCOM-STD.2025.3645000" class="pub-link" target="_blank">🔗 View Paper via DOI</a>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Elsevier Journal</span>
+                <div class="pub-title">Cognisseum: Cognitive radios on Colosseum facing adversaries</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, D. Roy, and M. Yuksel</div>
+                <div class="pub-venue">Computer Networks, vol. 254, 2024</div>
+                <a href="https://doi.org/10.1016/j.comnet.2024.110818" class="pub-link" target="_blank">🔗 View Paper via DOI</a>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Elsevier Journal</span>
+                <div class="pub-title">Coalition formation games of secondary users against smart and naive adversaries</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">Computer Networks, vol. 235, p. 110015, 2023</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Springer Journal</span>
+                <div class="pub-title">Automated detection of complete line-of-sight blockages in directional mmWave links</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">Photonic Network Communications, vol. 44, no. 3, pp. 159–174, 2022</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Book Chapter</span>
+                <div class="pub-title">Open RAN (O-RAN) Architecture, Security Risks, and Mitigation Strategies</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and V. K. Shah</div>
+                <div class="pub-venue">Security and Privacy in Next-Generation Wireless Networks, Springer, 2025</div>
+            </div>
+
+            <h3 class="pub-heading">Refereed Conference Proceedings</h3>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">LUNAR-DT: Digital Twin Modeling and System-Level Evaluation of Lunar Communication Networks</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, B. Witherell, E. Kay, G. Thompson, D. Beaver, B. Saunders, D. Bradley, and V. K. Shah</div>
+                <div class="pub-venue">IEEE International Conference on Communications (ICC), 2026</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">ProSAS: Proactive Spectrum Adaptation Scheme for 6G Coexistence in FR3 Band</div>
+                <div class="pub-authors">T. R. Niloy, <strong>S. Seth</strong>, M. Z. Hassan, and V. K. Shah</div>
+                <div class="pub-venue">IEEE Global Communications Conference (GLOBECOM), 2025</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Strategic Channel Selection for Secondary Users under Proactive and Reactive Jamming Attacks</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">IEEE Military Communications Conference (MILCOM), 2024</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Adversarial Agility in Cognitive Radio Networks: A Coalition Formation Game Approach</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, D. Roy, and M. Yuksel</div>
+                <div class="pub-venue">IEEE International Conference on Computer Communications and Networks (ICCCN), 2024</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Heuristics for Beamsteering Optimization in Free-Space-Optical and mmWave Directional Networks</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">IEEE Global Communications Conference (GLOBECOM), 2023</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Mitigating Blockages in Directional Wireless Networks via Role-Based Time-Sharing</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, A. Vosoughi, and M. Yuksel</div>
+                <div class="pub-venue">IEEE International Conference on Mobile Ad-Hoc and Smart Systems (MASS), 2023</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Experimental Evaluation of Cognitive Radios under Smart Jamming on the Colosseum Testbed</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, D. Roy, and M. Yuksel</div>
+                <div class="pub-venue">IEEE International Conference on Cognitive Radio Oriented Wireless Networks (CROWNCOM), 2022</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Line-of-Sight Alignment Recovery in Autonomous mmWave Mesh Networks</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">IEEE Wireless Communications and Networking Conference (WCNC), 2022</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">Autonomous Mechanical Beamsteering for LoS Maintenance in Transiting Directional Nodes</div>
+                <div class="pub-authors"><strong>S. Seth</strong>, N. S. Patel, and M. Yuksel</div>
+                <div class="pub-venue">IEEE International Conference on Communication Systems (ICCS), 2021</div>
+            </div>
+
+            <div class="pub-row">
+                <span class="pub-meta-tag">Conference Paper</span>
+                <div class="pub-title">A Multi-Tier Dynamic Spectrum Access Framework for Priority-Based Coexistence</div>
+                <div class="pub-authors"><strong>S. Seth</strong> and M. Yuksel</div>
+                <div class="pub-venue">IEEE International Symposium on Dynamic Spectrum Access Networks (DySPAN), 2021</div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
